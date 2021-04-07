@@ -27,9 +27,11 @@ export default {
 
       this.$apollo.mutate({
         mutation: CardDeleteMutation,
+
         variables: {
           id: this.card.id,
         },
+
         update(store, { data: { cardDelete } }) {
           self.$emit("deleted", {
             store,
