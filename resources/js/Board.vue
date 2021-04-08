@@ -17,6 +17,7 @@
           :list="list"
           @card-added="updateQueryCache($event)"
           @card-deleted="updateQueryCache($event)"
+          @card-updated="updateQueryCache($event)"
         ></List>
       </div>
     </div>
@@ -26,7 +27,7 @@
 import gql from "graphql-tag";
 import List from "./components/List";
 import BoardQuary from "./graphql/BoardWithListsAndCards.gql";
-import { EVENT_CARD_ADDED, EVENT_CARD_DELETED } from "./constents.js";
+import { EVENT_CARD_ADDED, EVENT_CARD_DELETED, EVENT_CARD_UPDATED } from "./constents.js";
 
 export default {
   components: { List },
@@ -54,6 +55,11 @@ export default {
 
         case EVENT_CARD_DELETED:
           listByID().cards = listByID().cards.filter((card) => card.id != event.data.id);
+          break;
+
+        case EVENT_CARD_UPDATED:
+          listByID().cards.filter((card) => card.id == event.data.id).title =
+            event.data.title;
           break;
       }
 
