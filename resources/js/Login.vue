@@ -2,19 +2,19 @@
   <div class="bg-white h-full sm:bg-gray-100 flex justify-center">
     <div class="container mt-2 sm:mt-10 flex flex-col items-center">
       <div class="text-3xl text-blue-700 font-bold mb-10">
-        <span>Laravello</span>
+        <router-link :to="{ name: 'board' }">Laravello</router-link>
       </div>
       <div class="w-full sm:shadow-xl sm:bg-white sm:py-8 sm:px-12">
         <div class="w-full text-center text-gray-600 font-bold mb-8">
           Log in to Laravello
         </div>
-        <form>
+        <form @submit.prevent="authenticate">
           <div class="w-full mb-4">
             <input
               type="text"
               placeholder="Enter email"
               class="rounded-sm px-4 py-2 outline-none focus:outline-none border-gray-400 bg-gray-100 border-solid border-2 w-full text-sm"
-              autocomplete="off"
+              v-model="email"
             />
           </div>
           <div class="w-full mb-4">
@@ -22,6 +22,7 @@
               type="password"
               placeholder="Enter password"
               class="rounded-sm px-4 py-2 outline-none focus:outline-none border-gray-400 bg-gray-100 border-solid border-2 w-full text-sm"
+              v-model="password"
             />
           </div>
           <div class="w-full mb-6">
@@ -43,6 +44,29 @@
     </div>
   </div>
 </template>
+<script>
+import Login from "./graphql/Login.gql";
+
+export default {
+  data() {
+    return {
+      email: null,
+      password: null,
+    };
+  },
+  methods: {
+    authenticate() {
+      this.$apollo.mutate({
+        mutation: Login,
+        variables: {
+          email: this.email,
+          password: this.password,
+        },
+      });
+    },
+  },
+};
+</script>
 <style scoped>
 .container {
   width: 300px;

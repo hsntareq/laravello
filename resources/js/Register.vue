@@ -2,7 +2,7 @@
   <div class="bg-white sm:bg-gray-100 h-full flex justify-center">
     <div class="container sm:w-400p mt-2 sm:mt-10 flex flex-col items-center">
       <div class="text-3xl text-blue-700 font-bold mb-10">
-        <span>Laravello</span>
+        <router-link :to="{name:'board'}">Laravello</router-link>
       </div>
       <div class="w-full sm:shadow-xl sm:bg-white sm:py-8 sm:px-12">
         <div class="w-full text-center text-gray-600 font-bold mb-8">
