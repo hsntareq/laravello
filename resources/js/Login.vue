@@ -5,6 +5,8 @@
         <router-link :to="{ name: 'board' }">Laravello</router-link>
       </div>
       <div class="w-full sm:shadow-xl sm:bg-white sm:py-8 sm:px-12">
+        <Errors :errors="errors"></Errors>
+
         <div class="w-full text-center text-gray-600 font-bold mb-8">
           Log in to Laravello
         </div>
@@ -46,23 +48,35 @@
 </template>
 <script>
 import Login from "./graphql/Login.gql";
+import { gqlErrors } from "./utils";
+import Errors from "./components/Errors";
 
 export default {
+  components: { Errors },
   data() {
     return {
       email: null,
       password: null,
+      errors: [],
     };
   },
   methods: {
-    authenticate() {
-      this.$apollo.mutate({
-        mutation: Login,
-        variables: {
-          email: this.email,
-          password: this.password,
-        },
-      });
+    async authenticate() {
+      this.errors = [];
+
+      try {
+        await this.$apollo.mutate({
+          mutation: Login,
+          variables: {
+            email: this.email,
+            password: this.password,
+          },
+        });
+      } catch (err) {
+        console.log(gqlErrors(err));
+        this.errors = gqlErrors(err);
+      }
+      console.log("Hay!");
     },
   },
 };
