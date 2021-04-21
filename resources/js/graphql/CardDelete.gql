@@ -1,5 +1,5 @@
-mutation($id: ID!){
-  cardDelete(id:$id){
-    id
-  }
+mutation($id: ID!) {
+    cardDelete(id: $id) {
+        id
+    }
 }
