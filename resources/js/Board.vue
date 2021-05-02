@@ -4,7 +4,18 @@
       <div class="ml-2 w-1/3">A</div>
       <div class="text-lg opacity-50 cursor-pointer hover:opacity-75">Laravello</div>
       <div class="mr-2 w-1/3 flex justify-end">
-        <router-link :to="{ name: 'login' }">Login</router-link>
+        <div v-if="isLoggedIn" class="flex items-center">
+          <div class="text-sm mr-2">{{ name }}</div>
+          <button class="header-btn">Logout</button>
+        </div>
+        <div v-else>
+          <button class="header-btn" @click="$router.push({ name: 'login' })">
+            Sign-in
+          </button>
+          <button class="header-btn" @click="$router.push({ name: 'register' })">
+            Register
+          </button>
+        </div>
       </div>
     </div>
     <div class="h-full flex flex-1 flex-col items-stretch">
@@ -33,6 +44,14 @@ import { EVENT_CARD_ADDED, EVENT_CARD_DELETED, EVENT_CARD_UPDATED } from "./cons
 
 export default {
   components: { List },
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.isLoggedIn;
+    },
+    name() {
+      return this.$store.state.user.name;
+    },
+  },
   apollo: {
     board: {
       query: BoardQuary,
