@@ -5,8 +5,10 @@
 /vendor
 .idea
 .vscode
+.history
 .env
 .env.backup
+.jsconfig.json
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
