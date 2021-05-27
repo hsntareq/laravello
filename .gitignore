@@ -4,8 +4,8 @@
 /storage/*.key
 /vendor
 .idea
-.vscode
 .idea
+.vscode
 .history
 .env
 .env.backup
